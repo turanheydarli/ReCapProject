@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Abstract
+namespace Core.Entities
 {
 	//IEntity implement edən class lar bir databaza obyektidir
-	interface IEntity
+	public interface IEntity
 	{
 	}
 }
