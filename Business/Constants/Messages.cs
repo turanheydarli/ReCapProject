@@ -12,5 +12,7 @@ namespace Business.Constants
 		internal static string CarAdded;
 		internal static string BrandAdded;
 		internal static string NameInvalid;
+		internal static string ThisCarAllreadyRented = "Bu araba zaten kiralandi";
+		internal static string ThisCarRented = "Araba kiralandi";
 	}
 }

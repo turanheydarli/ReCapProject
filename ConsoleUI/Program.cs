@@ -11,12 +11,19 @@ namespace ConsoleUI
 	{
 		static void Main(string[] args)
 		{
-			CarManager carManager = new CarManager(new EfCarDal());
-			//Add(carManager);
-			foreach (CarDetailDto car in carManager.GetCarDetails().Data)
+
+			RentalManager rentalManager  = new RentalManager(new EfRentalDal());
+
+			Console.WriteLine(rentalManager.Add(new Rental { CarId = 1, CustomerId = 1, RentDate = DateTime.UtcNow.AddHours(4) }).Message);
+			foreach (Rental rental in rentalManager.GetAll().Data)
 			{
-				Console.WriteLine(car.BrandName + " - " + car.CarName + " - " + car.ColorName + " - " + car.DailyPrice);
+				Console.WriteLine(rental.RentDate + " - " + rental.CustomerId + " - " + rental.CarId);
 			}
+		}
+
+		private static void AddUser(UserManager userManager)
+		{
+			userManager.Add(new User { Email = "engindemirog@kodlama.io", FirstName = "Engin", LastName = "Demirog", Password = "123456" });
 		}
 
 		private static void Add(CarManager carManager)
