@@ -20,10 +20,10 @@ namespace Business.Concrete
 		}
 		public IResult Add(Rental rental)
 		{
-			Rental addToRental = _rentalDal.Get(r => r.CarId == rental.CarId);
-			if (addToRental != null)
+			Rental rentalToadd = _rentalDal.Get(r => r.CarId == rental.CarId);
+			if (rentalToadd != null)
 			{
-				if(addToRental.ReturnDate == null)
+				if(rentalToadd.ReturnDate == null)
 				{
 					return new ErrorResult(Messages.ThisCarAllreadyRented);
 				}
