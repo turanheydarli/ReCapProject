@@ -14,6 +14,10 @@ namespace Business.Concrete
 	public class BrandManager : IBrandService
 	{
 		IBrandDal _brandDal;
+		public BrandManager(IBrandDal brandDal)
+		{
+			_brandDal = brandDal;
+		}
 		public IResult Add(Brand brand)
 		{
 			if (brand.Name.Length <= 2)
@@ -40,7 +44,7 @@ namespace Business.Concrete
 
 		public IDataResult<Brand> GetById(int brandId)
 		{
-			throw new NotImplementedException();
+			return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == brandId));
 		}
 
 		public IResult Update(Brand brand)

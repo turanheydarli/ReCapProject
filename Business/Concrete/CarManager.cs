@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-	public class CarManager:ICarService
+	public class CarManager : ICarService
 	{
 		ICarDal _carDal;
 		public CarManager(ICarDal carDal)
@@ -22,7 +22,7 @@ namespace Business.Concrete
 
 		public IResult Add(Car car)
 		{
-			if (car.Description.Length <= 2 && car.DailyPrice <= 0)
+			if (car.Description.Length <= 2 || car.DailyPrice <= 0)
 			{
 				return new ErrorResult(Messages.CarNameInvalid);
 			}
@@ -46,7 +46,7 @@ namespace Business.Concrete
 
 		public IDataResult<Car> GetById(int carId)
 		{
-			throw new NotImplementedException();
+			return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
 		}
 
 		public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -54,14 +54,14 @@ namespace Business.Concrete
 			return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
 		}
 
-		public IResult GetCarsByBrandId(int id)
+		public IDataResult<List<Car>> GetByBrandId(int id)
 		{
-			throw new NotImplementedException();
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));
 		}
 
-		public IResult GetCarsByColorId(int id)
+		public IDataResult<List<Car>> GetByColorId(int id)
 		{
-			throw new NotImplementedException();
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
 		}
 
 		public IResult Update(Car car)
