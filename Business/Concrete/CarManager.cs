@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
@@ -27,6 +28,16 @@ namespace Business.Concrete
 		[ValidationAspect(typeof(CarValidator))]
 		public IResult Add(Car car)
 		{
+			var result = BusinessRules.Run
+			(
+				CheckIfCarNameExists(car.Description)
+			);
+
+			if(result != null)
+			{
+				return result;
+			}
+
 			_carDal.Add(car);
 
 			return new Result(true, Messages.CarAdded);
@@ -68,6 +79,16 @@ namespace Business.Concrete
 		{
 			_carDal.Update(car);
 			return new Result(true);
+		}
+
+		private IResult CheckIfCarNameExists(string description)
+		{
+			var result = _carDal.GetAll(c => c.Description == description).Any();
+			if(result)
+			{
+				return new ErrorResult(Messages.CarNameExists);
+			}
+			return new SuccessResult();
 		}
 	}
 }
